@@ -1,0 +1,13 @@
+# Dependencias de Node (Frontend)
+node_modules/
+dist/
+.env
+
+# Archivos de Python (Backend)
+__pycache__/
+venv/
+*.pyc
+.env
+
+# Archivos del sistema
+.DS_Store

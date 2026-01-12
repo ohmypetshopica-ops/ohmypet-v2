@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+@theme {
+  /* Verde Claro (Esmeralda Brillante) */
+  --color-primary: #10B981;       
+  --color-primary-hover: #059669; /* Un poco más oscuro al pasar el mouse */
+  --color-primary-light: #D1FAE5; 
+  
+  --color-secondary: #064E3B;     
+}
+
+/* Forzar que el html/body ocupen el 100% y no haya scroll extra */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Esto asegura que no haya scroll en la pantalla de login */
+}
