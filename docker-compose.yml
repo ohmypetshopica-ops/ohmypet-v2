@@ -8,8 +8,8 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_USER=ohmypet_user
-      - POSTGRES_PASSWORD=password_seguro_123 # ¡Cambia esto por seguridad!
+      - POSTGRES_USER=ohmypet_admin
+      - POSTGRES_PASSWORD=admin123 # ¡Cambia esto por seguridad!
       - POSTGRES_DB=ohmypet_db
     ports:
       - "5432:5432"
