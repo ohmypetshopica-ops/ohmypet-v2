@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  # --- BASE DE DATOS (Postgres) ---
+  db:
+    image: postgres:15-alpine
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=ohmypet_user
+      - POSTGRES_PASSWORD=password_seguro_123 # ¡Cambia esto por seguridad!
+      - POSTGRES_DB=ohmypet_db
+    ports:
+      - "5432:5432"
+
+  # --- BACKEND (Python FastAPI) ---
+  backend:
+    build: ./backend
+    restart: always
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://ohmypet_user:password_seguro_123@db:5432/ohmypet_db
+    depends_on:
+      - db
+
+  # --- FRONTEND (React) ---
+  frontend:
+    build: ./frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
