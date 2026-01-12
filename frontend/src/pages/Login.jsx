@@ -1,81 +1,91 @@
-import { useState } from 'react';
-import { LoginForm } from '../features/auth/components/LoginForm';
-import bgImage from '../assets/login-bg.jpg';
-import { PawPrint } from 'lucide-react';
+import { useState } from "react";
+import { LoginForm } from "../features/auth/components/LoginForm";
+import RegisterForm from "../features/auth/components/RegisterForm"; 
+import loginBg from "../assets/login-bg.jpg";
 
-const LoginPage = () => {
+export default function Login() {
+  const [isSignUp, setIsSignUp] = useState(false);
+
   return (
-    <div className="h-screen w-full flex bg-white overflow-hidden">
+    // --- CONTENEDOR PRINCIPAL ---
+    <div className="relative h-screen w-full bg-[#f0f4f3] overflow-hidden flex items-center justify-center">
       
-      {/* === SECCIÓN IZQUIERDA - IMAGEN (50%) === */}
-      <div className="hidden lg:flex lg:w-1/2 relative bg-gray-900 overflow-hidden">
+      {/* Elementos decorativos de fondo (luces sutiles detrás) */}
+      <div className="absolute top-0 left-0 w-96 h-96 bg-primary/20 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-green-300/20 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000"></div>
+
+      <div className="relative w-full h-full shadow-2xl overflow-hidden flex z-10">
         
-        {/* Imagen de fondo */}
+        {/* --- SECCIÓN IZQUIERDA (LOGIN FORM) --- */}
         <div 
-            className="absolute inset-0 bg-cover bg-center opacity-100 scale-105 animate-[spin_60s_linear_infinite]"
-            style={{
-              backgroundImage: `url(${bgImage})`, 
-              animationDirection: 'alternate-reverse', 
-              animationName: 'none' 
-            }} 
-        />
-        
-        {/* CORRECCIÓN AQUÍ: 
-           Quitamos el 'mix-blend-multiply' y los colores verdes.
-           Usamos un degradado negro simple (de arriba a abajo) para oscurecer la foto
-           y asegurar que el texto blanco sea legible.
-        */}
-        <div className="absolute inset-0 bg-black/50 bg-gradient-to-t from-black/80 via-black/40 to-black/60" />
-        
-        {/* Texto sobre la imagen */}
-        <div className="relative z-10 w-full p-16 flex flex-col justify-between h-full text-white">
-            <div className="animate-fade-in-up">
-                <div className="flex items-center gap-3 mb-6">
-                    <div className="p-2 bg-white/10 rounded-lg backdrop-blur-sm">
-                      <PawPrint size={32} className="text-white" />
-                    </div>
-                    <h1 className="text-3xl font-bold tracking-tight">OhMyPet</h1>
-                </div>
-            </div>
-
-            <div className="max-w-md animate-fade-in-up delay-200">
-                <h2 className="text-4xl font-extrabold leading-tight mb-6">
-                    El mejor cuidado <br/> para tu mascota.
-                </h2>
-                <p className="text-lg text-gray-200 leading-relaxed">
-                    Gestiona citas, historial clínico y productos desde un solo lugar. Rápido, seguro y confiable.
-                </p>
-            </div>
-
-             <div className="text-sm text-gray-400 animate-fade-in-up delay-300">
-                 © 2026 OhMyPet Inc.
-             </div>
+          className={`absolute top-0 left-0 h-full w-1/2 flex flex-col justify-center items-center transition-all duration-700 ease-[cubic-bezier(0.77,0,0.175,1)] ${
+            isSignUp ? "translate-x-full opacity-0 z-0 scale-95" : "opacity-100 z-20 scale-100"
+          }`}
+        >
+          {/* TARJETA LOGIN */}
+          <div className="w-full max-w-[450px] p-12 bg-white/80 backdrop-blur-xl rounded-[40px] shadow-[0_20px_40px_rgba(0,0,0,0.08)] border border-white/60 relative overflow-hidden transition-all duration-500">
+             <LoginForm />
+          </div>
         </div>
-      </div>
-      
-      {/* === SECCIÓN DERECHA - FORMULARIO (50%) === */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 relative overflow-hidden bg-white">
-         
-         {/* Burbujas decorativas (sutiles) */}
-         <div className="absolute top-0 right-0 -mt-20 -mr-20 w-80 h-80 bg-primary/10 rounded-full blur-3xl opacity-60 pointer-events-none"></div>
-         <div className="absolute bottom-0 left-0 -mb-20 -ml-20 w-80 h-80 bg-secondary/10 rounded-full blur-3xl opacity-60 pointer-events-none"></div>
 
-         {/* Contenedor del formulario */}
-         <div className="w-full max-w-md z-10">
-            {/* Logo móvil */}
-            <div className="lg:hidden mb-8 text-center animate-fade-in-up">
-                 <div className="inline-flex items-center gap-2 text-primary justify-center">
-                    <PawPrint size={35} />
-                    <h1 className="text-2xl font-bold text-gray-800">OhMyPet</h1>
-                </div>
-            </div>
+        {/* --- SECCIÓN DERECHA (REGISTER FORM) --- */}
+        <div 
+          className={`absolute top-0 left-0 h-full w-1/2 flex flex-col justify-center items-center transition-all duration-700 ease-[cubic-bezier(0.77,0,0.175,1)] ${
+            isSignUp ? "translate-x-full opacity-100 z-20 scale-100" : "opacity-0 z-0 scale-95"
+          }`}
+        >
+           {/* TARJETA REGISTRO */}
+           <div className="w-full max-w-[450px] p-12 bg-white/80 backdrop-blur-xl rounded-[40px] shadow-[0_20px_40px_rgba(0,0,0,0.08)] border border-white/60 relative overflow-hidden transition-all duration-500">
+             <RegisterForm />
+           </div>
+        </div>
+
+        {/* --- EL OVERLAY FLOTANTE (IMAGEN DESLIZANTE) --- */}
+        <div 
+          className={`absolute top-0 left-0 h-full w-1/2 z-40 transition-all duration-700 ease-[cubic-bezier(0.77,0,0.175,1)] overflow-hidden 
+          shadow-[0_0_60px_-15px_rgba(0,0,0,0.6)] ${ 
+            isSignUp 
+              ? "translate-x-0 rounded-r-[60px]" 
+              : "translate-x-full rounded-l-[60px]" 
+          }`}
+        >
+          {/* CAMBIO AQUÍ: Fondo negro neutro para soporte */}
+          <div className="relative w-full h-full bg-black text-white flex flex-col items-center justify-center text-center p-16">
             
-            <LoginForm />
-         </div>
-      </div>
+            {/* IMAGEN ORIGINAL: Sin filtros de color extraños */}
+            <img 
+               src={loginBg} 
+               alt="Background" 
+               className="absolute inset-0 w-full h-full object-cover scale-105" 
+            />
+            
+            {/* GRADIENTE DE LECTURA: Negro transparente solo para que se lea el texto */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/30"></div>
 
+            {/* Contenido Texto */}
+            <div className="relative z-10 max-w-lg animate-fade-in-up">
+              <h2 className="text-5xl font-extrabold mb-6 tracking-tight drop-shadow-lg">
+                {isSignUp ? "¡Hola de nuevo!" : "¡Únete a la familia!"}
+              </h2>
+              <p className="mb-12 text-lg leading-relaxed text-gray-100 font-medium drop-shadow-md">
+                {isSignUp 
+                  ? "Conéctate para seguir cuidando a tus mascotas con la mejor tecnología."
+                  : "Regístrate hoy y descubre un mundo de cuidado y amor para tu mejor amigo."}
+              </p>
+              
+              <button
+                onClick={() => setIsSignUp(!isSignUp)}
+                className="group relative px-12 py-4 overflow-hidden rounded-full bg-white/10 backdrop-blur-md text-white border-2 border-white font-bold shadow-lg transition-all hover:bg-white hover:text-primary hover:scale-105 active:scale-95"
+              >
+                <span className="relative uppercase tracking-wider text-sm z-10">
+                  {isSignUp ? "Iniciar Sesión" : "Crear Cuenta"}
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
   );
-};
-
-export default LoginPage;
+}

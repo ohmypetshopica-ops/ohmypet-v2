@@ -1,20 +1,21 @@
 import axiosClient from '../../../lib/axios-client';
 
-export const loginUser = async (email, password) => {
-  // Cuando tengas el backend Python listo, esta ruta será real.
-  // Por ahora, si falla la conexión, simularemos un éxito para que veas la UI funcionar.
-  try {
-    const response = await axiosClient.post('/auth/login', { email, password });
-    return response.data;
-  } catch (error) {
-    console.warn("Backend no conectado. Simulando login exitoso para desarrollo...");
-    // TODO: Borrar este mock cuando el backend Python esté listo
-    if (email === "demo@ohmypet.com" && password === "123456") {
-      return { 
-        user: { id: 1, name: "Admin Demo", email, role: "admin" },
-        access_token: "fake-jwt-token" 
-      };
-    }
-    throw error.response?.data || { message: 'Error de conexión' };
-  }
+// Función para INICIAR SESIÓN
+export const login = async ({ email, password }) => {
+  // Ahora sí llamamos al backend real en Python
+  const { data } = await axiosClient.post('/auth/login', { email, password });
+  return data; 
+};
+
+// Función para REGISTRARSE (¡Esta es la que te faltaba o fallaba!)
+export const register = async (userData) => {
+  // userData contiene: email, password, first_name, last_name_paternal, etc.
+  const { data } = await axiosClient.post('/auth/register', userData);
+  return data;
+};
+
+// Función para obtener datos del usuario actual (útil para recargar página)
+export const getCurrentUser = async () => {
+  const { data } = await axiosClient.get('/auth/me'); // Asegúrate de implementar esto en Python después si lo usas
+  return data;
 };
